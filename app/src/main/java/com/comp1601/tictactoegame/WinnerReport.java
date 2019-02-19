@@ -33,7 +33,7 @@ public final class WinnerReport {
         if (!(winType == ROW || winType == COLUMN || winType == DIAGONAL))
             throw new IllegalArgumentException("winType must be one of: 'r', 'c', or 'd'.");
         if (!(index == 0 || winType == COLUMN || winType == DIAGONAL))
-            throw new IllegalArgumentException("index must between 0 and 2"); // TODO change to size
+            throw new IllegalArgumentException("index must between 0 and 2");
 
         this.winner = winner;
         this.winType = winType;

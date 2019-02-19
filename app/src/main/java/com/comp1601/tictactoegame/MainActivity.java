@@ -4,11 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    /* Views */
+    Button startGameButton;
+    EditText player1SymbolInput;
+    EditText player2SymbolInput;
 
     Button[][] buttonGrid = new Button[3][3];
+
     Player player1 = new Player('X');
     Player player2 = new Player('O');
     TicTacToeGame game = new TicTacToeGame(player1, player2);
@@ -18,8 +25,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /* Initialize views */
+        startGameButton = findViewById(R.id.startGameButton);
+        player1SymbolInput = findViewById(R.id.player1SymbolInput);
+        player2SymbolInput = findViewById(R.id.player2SymbolInput);
+
         // TODO find out how to put buttons in a matrix
-        // Populate buttonGrid
         buttonGrid[0][0] = findViewById(R.id.button00);
         buttonGrid[0][1] = findViewById(R.id.button01);
         buttonGrid[0][2] = findViewById(R.id.button02);
@@ -31,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         buttonGrid[2][2] = findViewById(R.id.button22);
 
 
+        startGameButton.setOnClickListener(button -> {
+            Toast.makeText(this, "button clicked", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
 
@@ -39,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
      * @param view the Button that got clicked
      */
     public void onGameButtonClicked(View view) {
+
+        Toast.makeText(this, view.getTag() + " clicked", Toast.LENGTH_SHORT).show();
+
 
         // Tag stores the row and column
 //        String tag = (String)view.getTag();

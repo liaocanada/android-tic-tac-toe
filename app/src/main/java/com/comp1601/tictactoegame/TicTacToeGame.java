@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class TicTacToeGame {
-    // TODO add size
 
     private int size = 3;
     private Player[] players = new Player[2];
