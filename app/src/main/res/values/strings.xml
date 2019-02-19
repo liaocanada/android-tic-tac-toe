@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TicTacToeGame</string>
+
+    <string name="settings_label">New Game Settings</string>
+    <string name="player1_symbol_prompt">Your symbol:</string>
+    <string name="player1_symbol_hint">E.g. X</string>
+    <string name="player1_default_symbol">X</string>
+
+    <string name="player2_symbol_prompt">Opponent\'s symbol:</string>
+    <string name="player2_symbol_hint">E.g. O</string>
+    <string name="player2_default_symbol">O</string>
+
+    <string name="new_game_button">Start Game</string>
+
+    <string name="user_console">It is X\'s turn.</string>
+
+    <string name="scoreboard_label">Scores:</string>
+    <string name="player1_score_label">You: 0</string>
+    <string name="player2_score_label">Opponent: 0</string>
+
 </resources>
