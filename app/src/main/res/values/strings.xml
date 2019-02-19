@@ -12,10 +12,22 @@
 
     <string name="new_game_button">Start Game</string>
 
-    <string name="user_console">It is X\'s turn.</string>
+    <string name="user_console_turn">It is %1$c\'s turn.</string>
+    <string name="user_console_invalid">
+        That is an invalid move! It is still %1$c\'s turn.
+    </string>
+
+    <string name="winner_toast">
+        %1$c has won!
+        A new round has begun.
+    </string>
+    <string name="draw_toast">
+        Game has ended in a draw. Everyone wins!
+        A new round has begun.
+    </string>
 
     <string name="scoreboard_label">Scores:</string>
-    <string name="player1_score_label">You: 0</string>
-    <string name="player2_score_label">Opponent: 0</string>
+    <string name="player1_score_label">You: %1$d</string>
+    <string name="player2_score_label">Opponent: %1$d</string>
 
 </resources>
