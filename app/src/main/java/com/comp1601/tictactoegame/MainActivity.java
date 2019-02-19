@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     Player player1 = new Player('X');
     Player player2 = new Player('O');
     TicTacToeGame game = new TicTacToeGame(player1, player2);
+    boolean isSinglePlayerMode = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
      * @param button the Button that got clicked
      */
     public void onGameButtonClicked(View button) {
-        Log.i(TAG, "onGameButtonClicked: " + button.getTag() + " clicked");
+        Log.i(TAG, "onGameButtonClicked: " + button.getTag() + " clicked...");
 
         // Get row and column of where the button was clicked
         String buttonTag = (String) button.getTag();
@@ -90,14 +91,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (success) {
-            Log.i(TAG, "onGameButtonClicked: valid move");
+            Log.i(TAG, "onGameButtonClicked: A valid move");
 
             // Mark the button with the player's symbol
             buttonGrid[row][col].setText(player.getSymbolAsString());
 
-            // Check for a win
             WinnerReport winnerReport = game.getWinner();
-            if (winnerReport != null) {  // There's a winner!
+
+            // There's a winner!
+            if (winnerReport != null) {
+
+                // Disable buttons temporarily
+                disableGameBoard();
 
                 // Colour the winning buttons
                 highlightWinningButtons(winnerReport);
@@ -115,8 +120,18 @@ public class MainActivity extends AppCompatActivity {
                     resetGameBoard();
                     renderScores();
                     userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
+
+                    // PC's turn in single player mode
+                    if (isSinglePlayerMode && game.getTurn().equals(game.getPlayer(1)))
+                        clickRandomValidButton();
                 }, 2000);
-            } else if (game.isGridFilled()) {  // There is a draw!
+
+                // There is a draw!
+            } else if (game.isGridFilled()) {
+
+                // Disable buttons temporarily
+                disableGameBoard();
+
                 // Display Toast showing draw
                 Toast.makeText(this,
                         getString(R.string.draw_toast),
@@ -129,16 +144,27 @@ public class MainActivity extends AppCompatActivity {
                     resetGameBoard();
                     renderScores();
                     userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
+
+                    // PC's turn in single player mode
+                    if (isSinglePlayerMode && game.getTurn().equals(game.getPlayer(1)))
+                        clickRandomValidButton();
                 }, 2000);
-            } else {  // Nobody has won
+
+                // Nobody has won
+            } else {
                 // Set userConsole to "It is X's turn"
                 userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
+
+                // PC's turn in single player mode
+                if (isSinglePlayerMode && game.getTurn().equals(game.getPlayer(1)))
+                    clickRandomValidButton();
+
             }
 
         }
         // Invalid button was clicked
         else {
-            Log.i(TAG, "onGameButtonClicked: invalid move");
+            Log.i(TAG, "onGameButtonClicked: An invalid move");
             userConsole.setText(getString(R.string.user_console_invalid, player.getSymbol()));
         }
 
@@ -177,6 +203,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void clickRandomValidButton() {
+        // Generate random valid button to click
+        int randomRow = (int) (3 * Math.random());
+        int randomCol = (int) (3 * Math.random());
+
+        String randomButtonText = buttonGrid[randomRow][randomCol].getText().toString();
+        while (!randomButtonText.equals("")) {
+            randomRow = (int) (3 * Math.random());
+            randomCol = (int) (3 * Math.random());
+            randomButtonText = buttonGrid[randomRow][randomCol].getText().toString();
+        }
+
+        // Click the button
+        buttonGrid[randomRow][randomCol].performClick();
+    }
+
     private void renderScores() {
         int score1 = game.getPlayer(0).getScore();
         int score2 = game.getPlayer(1).getScore();
@@ -189,6 +232,14 @@ public class MainActivity extends AppCompatActivity {
             for (Button button : buttonRow) {
                 button.setText("");
                 button.setBackgroundResource(android.R.drawable.btn_default);
+                button.setEnabled(true);
+            }
+    }
+
+    public void disableGameBoard() {
+        for (Button[] buttonRow : buttonGrid)
+            for (Button button : buttonRow) {
+                button.setEnabled(false);
             }
     }
 }

@@ -41,7 +41,6 @@ public class TicTacToeGame {
      * @return true if the move was valid and successful, false otherwise
      */
     public boolean play(Player player, int row, int col) {
-        Log.i(TAG, "play: " + player + row + col);
 
         // Check if row or column are out of bounds
         if (row > SIZE || col > SIZE) return false;

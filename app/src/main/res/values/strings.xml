@@ -27,7 +27,7 @@
     </string>
 
     <string name="scoreboard_label">Scores:</string>
-    <string name="player1_score_label">You: %1$d</string>
-    <string name="player2_score_label">Opponent: %1$d</string>
+    <string name="player1_score_label">Player X: %1$d</string>
+    <string name="player2_score_label">Player O: %1$d</string>
 
 </resources>
