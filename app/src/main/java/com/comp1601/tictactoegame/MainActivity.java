@@ -20,4 +20,21 @@ public class MainActivity extends AppCompatActivity {
 
         TicTacToeGame game = new TicTacToeGame(x, o);
     }
+
+
+    /**
+     * Handles button clicks from the Tic Tac Toe game
+     * @param view the Button that got clicked
+     */
+//    public void onGameButtonClicked(View view) {
+//        R.id.
+//
+//        switch(view.getId()) {
+//            case R.id.selection_button_1:
+//                Log.i(TAG, "Radio button 1 clicked");
+//                mSelections[mCurrentQuestionIndex] = 1;     // Update the mSelections array
+//                mSelectionButton1.setChecked(true);         // Check the RadioButton
+//                break;
+//        }
+//    }
 }
