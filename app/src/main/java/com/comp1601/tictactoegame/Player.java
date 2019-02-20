@@ -1,6 +1,8 @@
 package com.comp1601.tictactoegame;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     /**
      * Increments by one every time a new Player is made, so that Players have unique IDs

@@ -9,25 +9,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-// TODO 1. X always goes first, alternates
-// TODO 2. Survive Rotation
-// TODO 3. Write more test cases
+// TODO 1. Survive Rotation
+// TODO 2. Write more test cases
 
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName() + " @" + System.identityHashCode(this);
 
     /* Views */
-    TextView userConsole;
-    TextView player1Score;
-    TextView player2Score;
+    private TextView userConsole;
+    private TextView player1Score;
+    private TextView player2Score;
+    private Button[][] buttonGrid = new Button[TicTacToeGame.SIZE][TicTacToeGame.SIZE];
 
-    Button[][] buttonGrid = new Button[TicTacToeGame.SIZE][TicTacToeGame.SIZE];
+    private boolean isSinglePlayerMode = true;
 
-    Player player1 = new Player('X');
-    Player player2 = new Player('O');
-    TicTacToeGame game = new TicTacToeGame(player1, player2);
-    boolean isSinglePlayerMode = true;
+    private Player player1 = new Player('X');
+    private Player player2 = new Player('O');
+    private TicTacToeGame game = new TicTacToeGame(player1, player2);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set userConsole to "It is X's turn"
         userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
-        resetGameBoard();
+        renderGameBoard();
         renderScores();
 
     }
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 // Reset game board in 2 seconds
                 new Handler().postDelayed(() -> {
                     game.handleWin(winnerReport);
-                    resetGameBoard();
+                    renderGameBoard();
                     renderScores();
                     userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
 
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 // Reset game board in 2 seconds
                 new Handler().postDelayed(() -> {
                     game.handleDraw();
-                    resetGameBoard();
+                    renderGameBoard();
                     renderScores();
                     userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
 
@@ -164,6 +163,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.i(TAG, "onSaveInstanceState(outState)");
+        outState.putSerializable("player1", player1);
+        outState.putSerializable("player2", player2);
+        outState.putSerializable("game", game);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.i(TAG, "onRestoreInstanceState(savedInstanceState)");
+        player1 = (Player) savedInstanceState.getSerializable("player1");
+        player2 = (Player) savedInstanceState.getSerializable("player2");
+        game = (TicTacToeGame) savedInstanceState.getSerializable("game");
+
+        // Update UI
+        userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
+        renderGameBoard();
+        renderScores();
+
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
     private void highlightWinningButtons(WinnerReport winnerReport) {
 
@@ -233,13 +256,16 @@ public class MainActivity extends AppCompatActivity {
         player2Score.setText(getString(R.string.player2_score_label, score2));
     }
 
-    public void resetGameBoard() {
-        for (Button[] buttonRow : buttonGrid)
-            for (Button button : buttonRow) {
-                button.setText("");
-                button.setBackgroundResource(android.R.drawable.btn_default);
-                button.setEnabled(true);
+    public void renderGameBoard() {
+        for (int i = 0; i < buttonGrid.length; i++) {
+            for (int j = 0; j < buttonGrid[i].length; j++) {
+                String buttonSymbol = game.getGridSymbol(i, j);
+                buttonGrid[i][j].setText(buttonSymbol);
+
+                buttonGrid[i][j].setBackgroundResource(android.R.drawable.btn_default);
+                buttonGrid[i][j].setEnabled(true);
             }
+        }
     }
 
     public void enableGameBoard(boolean enable) {

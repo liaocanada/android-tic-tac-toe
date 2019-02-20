@@ -2,11 +2,12 @@ package com.comp1601.tictactoegame;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class TicTacToeGame {
+public class TicTacToeGame implements Serializable {
 
     /* Constants */
     public static final int SIZE = 3;
@@ -175,6 +176,11 @@ public class TicTacToeGame {
 
     public int getComputerScore() {
         return computer.getScore();
+    }
+
+    public String getGridSymbol(int row, int col) {
+        if (grid[row][col] == null) return "";
+        return grid[row][col].getSymbolAsString();
     }
 
 

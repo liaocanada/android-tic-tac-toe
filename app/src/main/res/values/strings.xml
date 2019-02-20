@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TicTacToeGame</string>
+    <string name="app_name">Tic Tac Toe</string>
     <string name="placeholder_text">Placeholder Text</string>
 
     <string name="scoreboard_label">Scoreboard</string>
