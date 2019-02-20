@@ -6,18 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+// TODO 1. X always goes first, alternates
+// TODO 2. Survive Rotation
+// TODO 3. Write more test cases
 
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName() + " @" + System.identityHashCode(this);
 
     /* Views */
-    Button startGameButton;
-    EditText player1SymbolInput;
-    EditText player2SymbolInput;
     TextView userConsole;
     TextView player1Score;
     TextView player2Score;
@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate");
 
         /* Initialize views */
-        startGameButton = findViewById(R.id.startGameButton);
-        player1SymbolInput = findViewById(R.id.player1SymbolInput);
-        player2SymbolInput = findViewById(R.id.player2SymbolInput);
         userConsole = findViewById(R.id.userConsole);
         player1Score = findViewById(R.id.player1ScoreLabel);
         player2Score = findViewById(R.id.player2ScoreLabel);
@@ -58,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
         userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
         resetGameBoard();
         renderScores();
-
-        // Add action listener to submit button
-        startGameButton.setOnClickListener(button -> {
-            Toast.makeText(this, "button clicked", Toast.LENGTH_SHORT).show();
-        });
 
     }
 
@@ -102,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             if (winnerReport != null) {
 
                 // Disable buttons temporarily
-                disableGameBoard();
+                enableGameBoard(false);
 
                 // Colour the winning buttons
                 highlightWinningButtons(winnerReport);
@@ -122,15 +114,16 @@ public class MainActivity extends AppCompatActivity {
                     userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
 
                     // PC's turn in single player mode
-                    if (isSinglePlayerMode && game.getTurn().equals(game.getPlayer(1)))
+                    if (isSinglePlayerMode && game.isComputersTurn())
                         clickRandomValidButton();
+
                 }, 2000);
 
                 // There is a draw!
             } else if (game.isGridFilled()) {
 
                 // Disable buttons temporarily
-                disableGameBoard();
+                enableGameBoard(false);
 
                 // Display Toast showing draw
                 Toast.makeText(this,
@@ -146,8 +139,9 @@ public class MainActivity extends AppCompatActivity {
                     userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
 
                     // PC's turn in single player mode
-                    if (isSinglePlayerMode && game.getTurn().equals(game.getPlayer(1)))
+                    if (isSinglePlayerMode && game.isComputersTurn())
                         clickRandomValidButton();
+
                 }, 2000);
 
                 // Nobody has won
@@ -156,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 userConsole.setText(getString(R.string.user_console_turn, game.getTurn().getSymbol()));
 
                 // PC's turn in single player mode
-                if (isSinglePlayerMode && game.getTurn().equals(game.getPlayer(1)))
+                if (isSinglePlayerMode && game.isComputersTurn())
                     clickRandomValidButton();
 
             }
@@ -205,6 +199,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void clickRandomValidButton() {
+
+        // Disable all buttons so player can't click while computer is "thinking"
+        enableGameBoard(false);
+
         // Generate random valid button to click
         int randomRow = (int) (3 * Math.random());
         int randomCol = (int) (3 * Math.random());
@@ -216,13 +214,21 @@ public class MainActivity extends AppCompatActivity {
             randomButtonText = buttonGrid[randomRow][randomCol].getText().toString();
         }
 
-        // Click the button
-        buttonGrid[randomRow][randomCol].performClick();
+        // To be used inside lambda
+        final int finalRow = randomRow;
+        final int finalCol = randomCol;
+
+        // Click button in 0.75 seconds
+        new Handler().postDelayed(() -> {
+            enableGameBoard(true);
+            buttonGrid[finalRow][finalCol].performClick();
+        }, 750);
+
     }
 
     private void renderScores() {
-        int score1 = game.getPlayer(0).getScore();
-        int score2 = game.getPlayer(1).getScore();
+        int score1 = game.getPlayerScore();
+        int score2 = game.getComputerScore();
         player1Score.setText(getString(R.string.player1_score_label, score1));
         player2Score.setText(getString(R.string.player2_score_label, score2));
     }
@@ -236,10 +242,10 @@ public class MainActivity extends AppCompatActivity {
             }
     }
 
-    public void disableGameBoard() {
+    public void enableGameBoard(boolean enable) {
         for (Button[] buttonRow : buttonGrid)
             for (Button button : buttonRow) {
-                button.setEnabled(false);
+                button.setEnabled(enable);
             }
     }
 }

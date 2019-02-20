@@ -1,8 +1,5 @@
 package com.comp1601.tictactoegame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
 
     /**
@@ -13,7 +10,7 @@ public class Player {
     /**
      * Stores which symbols have been used, so that each Player has an unique symbol
      */
-    private static List<Character> takenSymbols = new ArrayList<>();
+//    private static List<Character> takenSymbols = new ArrayList<>();
 
 
     /**
@@ -22,9 +19,9 @@ public class Player {
     private final int id;
 
     /**
-     * The unique symbol of a Player
+     * The symbol of a Player
      */
-    private final char symbol;
+    private char symbol;
 
     /**
      * The number of times this player has won
@@ -41,18 +38,22 @@ public class Player {
     public Player(char symbol) throws IllegalArgumentException {
         this.id = idCount++;
 
-        if (!takenSymbols.contains(symbol)) {
+//        if (!takenSymbols.contains(symbol)) {
             this.symbol = symbol;
-            takenSymbols.add(symbol);
-        } else {
-            throw new IllegalArgumentException("A player with symbol '" + symbol + "' already exists.");
-        }
+//            takenSymbols.add(symbol);
+//        } else {
+//            throw new IllegalArgumentException("A player with symbol '" + symbol + "' already exists.");
+//        }
     }
 
 
     /* Getters */
     public char getSymbol() {
         return this.symbol;
+    }
+
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
     }
 
     public String getSymbolAsString() {

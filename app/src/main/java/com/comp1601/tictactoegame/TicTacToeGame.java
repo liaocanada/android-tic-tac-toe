@@ -8,36 +8,54 @@ import java.util.stream.Collectors;
 
 public class TicTacToeGame {
 
+    /* Constants */
     public static final int SIZE = 3;
     private final String TAG = this.getClass().getSimpleName() + " @" + System.identityHashCode(this);
-    private Player[] players = new Player[2];
-    private Player[][] grid = new Player[SIZE][SIZE];
 
-    private Player startingPlayer;
+    private Player[][] grid = new Player[SIZE][SIZE];
+    private Player player;
+    private Player computer;
     private Player turn;
+
+
+    /**
+     * Initializes a Tic Tac Toe game with two default Players
+     */
+    public TicTacToeGame() {
+        this(new Player('X'), new Player('O'));
+    }
 
     /**
      * Initializes a Tic Tac Toe game with two Players
-     *
-     * @param first  the Player that starts first
-     * @param second the Player that goes second
+     * @param player1 the player
+     * @param player2 the computer
      */
-    public TicTacToeGame(Player first, Player second) {
-        players[0] = first;
-        players[1] = second;
+    public TicTacToeGame(Player player1, Player player2) {
+        player = player1;
+        computer = player2;
 
-        startingPlayer = players[0];
-        turn = players[0];
+        newGame();
+    }
 
-        resetBoard();
+    /**
+     * Clears all board state and gives the turn to the player with the highest ASCII value symbol
+     */
+    private void newGame() {
+        // Set the turn to the player with the highest ASCII symbol
+        turn = (player.getSymbol() == 'X') ? player : computer;
+
+        // Set the grid to empty
+        for (int i = 0; i < grid.length; i++)
+            for (int j = 0; j < grid[i].length; j++)
+                grid[i][j] = null;
 
     }
 
 
-    /**
-     * @param player
-     * @param row
-     * @param col
+    /** Attempts to place a Player's symbol at the specified location.
+     * @param player the Player that clicked the tic-tac-toe spot
+     * @param row the row of the tic-tac-toe spot
+     * @param col the column of the tic-tac-toe spot
      * @return true if the move was valid and successful, false otherwise
      */
     public boolean play(Player player, int row, int col) {
@@ -52,7 +70,7 @@ public class TicTacToeGame {
         // Occupy the grid cell with player
         grid[row][col] = player;
         // Give turn to opponent
-        turn = otherPlayer(player);
+        turn = getOtherPlayer(player);
 
         // Print state of game board
         Log.i(TAG, "Board State: \n" + this);
@@ -63,8 +81,7 @@ public class TicTacToeGame {
 
     /**
      * Checks if a player has won.
-     *
-     * @return A WinnerReport containing details about the win, or null if neither Player has won.
+     * @return A WinnerReport containing details about the win, or null if no Player has won.
      */
     public WinnerReport getWinner() {
 
@@ -92,65 +109,74 @@ public class TicTacToeGame {
 
     }
 
+
     public void handleWin(WinnerReport winnerReport) {
 
         // Add 1 to score
         winnerReport.getWinner().incrementScore();
 
-        // Swap players so that the other player starts
-        startingPlayer = otherPlayer(startingPlayer);
-        turn = startingPlayer;
+        // Swap symbols
+        swapSymbols();
 
-        // Reset board state
-        resetBoard();
+        // Reset turns and board state
+        newGame();
 
-    }
-
-    public void handleDraw() {
-
-        // Add 1 to both scores
-        for (Player player : players) player.incrementScore();
-
-        // Swap players so that the other player starts
-        startingPlayer = otherPlayer(startingPlayer);
-        turn = startingPlayer;
-
-        resetBoard();
     }
 
 
     /**
-     * @return whether or not the entire grid is filled
+     * @return whether or not the entire grid is filled (i.e. in a draw state)
      */
     public boolean isGridFilled() {
-        return !Arrays.stream(grid).parallel()
+        boolean gridHasNull = Arrays.stream(grid).parallel()
                 .flatMap(Arrays::stream)
                 .anyMatch(Objects::isNull);
+        return !gridHasNull;
     }
 
-    private void resetBoard() {
-        for (int i = 0; i < grid.length; i++)
-            for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j] = null;
-            }
+    public void handleDraw() {
+        // Add 1 to both scores
+        player.incrementScore();
+        computer.incrementScore();
+
+        // Swap player and computer symbols
+        swapSymbols();
+        newGame();
     }
 
 
-    private Player otherPlayer(Player thisPlayer) {
-        if (players[0].equals(thisPlayer)) {
-            return players[1];
+    private void swapSymbols() {
+        char tempSymbol = player.getSymbol();
+        player.setSymbol(computer.getSymbol());
+        computer.setSymbol(tempSymbol);
+    }
+
+    private Player getOtherPlayer(Player thisPlayer) {
+        if (thisPlayer.equals(player)) {
+            return computer;
         } else {
-            return players[0];
+            return player;
         }
+    }
+
+
+    /* Getters */
+    public boolean isComputersTurn() {
+        return turn.equals(computer);
     }
 
     public Player getTurn() {
         return turn;
     }
 
-    public Player getPlayer(int index) {
-        return players[index];
+    public int getPlayerScore() {
+        return player.getScore();
     }
+
+    public int getComputerScore() {
+        return computer.getScore();
+    }
+
 
     @Override
     public String toString() {

@@ -14,87 +14,56 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        android:id="@+id/settingsLabel"
+        android:id="@+id/scoreboardLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/settings_label"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/scoreboard_label"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/player1SymbolPrompt"
+        android:id="@+id/player1ScoreLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/player1_symbol_prompt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsLabel" />
-
-    <TextView
-        android:id="@+id/player2SymbolPrompt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/player2_symbol_prompt"
-        app:layout_constraintStart_toStartOf="@+id/verticalCenterLine"
-        app:layout_constraintTop_toBottomOf="@+id/settingsLabel" />
-
-    <EditText
-        android:id="@+id/player1SymbolInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/player1_symbol_hint"
-        android:inputType="textCapWords"
-        android:maxLength="1"
-        android:maxLines="1"
-        android:textSize="14sp"
+        android:text="@string/player1_score_label"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/verticalCenterLine"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/player1SymbolPrompt" />
+        app:layout_constraintTop_toBottomOf="@+id/scoreboardLabel" />
 
-    <EditText
-        android:id="@+id/player2SymbolInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="@string/player2_symbol_hint"
-        android:inputType="textCapWords"
-        android:maxLength="1"
-        android:maxLines="1"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/verticalCenterLine"
-        app:layout_constraintTop_toBottomOf="@+id/player2SymbolPrompt" />
-
-    <Button
-        android:id="@+id/startGameButton"
+    <TextView
+        android:id="@+id/player2ScoreLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/new_game_button"
+        android:layout_marginEnd="8dp"
+        android:text="@string/player2_score_label"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/player2SymbolInput" />
+        app:layout_constraintStart_toStartOf="@+id/verticalCenterLine"
+        app:layout_constraintTop_toBottomOf="@+id/scoreboardLabel" />
 
     <TextView
         android:id="@+id/userConsole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/placeholder_text"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startGameButton" />
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/buttonGrid"
         android:layout_width="0dp"
@@ -120,7 +89,6 @@
             android:text="X"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toTopOf="@+id/button10"
             app:layout_constraintEnd_toStartOf="@+id/button01"
@@ -138,7 +106,6 @@
             android:tag="button01"
             android:text="X"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toTopOf="@+id/button11"
             app:layout_constraintEnd_toStartOf="@+id/button02"
@@ -156,7 +123,6 @@
             android:tag="button02"
             android:text="X"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toTopOf="@+id/button12"
             app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +141,6 @@
             android:tag="button10"
             android:text="X"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toTopOf="@+id/button20"
             app:layout_constraintEnd_toStartOf="@+id/button11"
@@ -193,7 +158,6 @@
             android:tag="button11"
             android:text="X"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toTopOf="@+id/button21"
             app:layout_constraintEnd_toStartOf="@+id/button12"
@@ -211,7 +175,6 @@
             android:tag="button12"
             android:text="X"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toTopOf="@+id/button22"
             app:layout_constraintEnd_toEndOf="parent"
@@ -230,7 +193,6 @@
             android:tag="button20"
             android:text="X"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button21"
@@ -248,7 +210,6 @@
             android:tag="button21"
             android:text="X"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button22"
@@ -266,7 +227,6 @@
             android:tag="button22"
             android:text="X"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="64sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -275,41 +235,14 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/scoreboardLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/scoreboard_label"
-        android:textSize="18sp"
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGrid" />
-
-    <TextView
-        android:id="@+id/player1ScoreLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/player1_score_label"
-        app:layout_constraintEnd_toStartOf="@+id/verticalCenterLine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreboardLabel" />
-
-    <TextView
-        android:id="@+id/player2ScoreLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/player2_score_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/verticalCenterLine"
-        app:layout_constraintTop_toBottomOf="@+id/scoreboardLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/player2ScoreLabel" />
 
 </android.support.constraint.ConstraintLayout>
