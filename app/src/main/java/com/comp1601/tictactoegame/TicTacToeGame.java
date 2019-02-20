@@ -62,11 +62,20 @@ public class TicTacToeGame implements Serializable {
     public boolean play(Player player, int row, int col) {
 
         // Check if row or column are out of bounds
-        if (row > SIZE || col > SIZE) return false;
+        if (row > SIZE || col > SIZE) {
+            System.out.println("Selected row=" + row + " and col=" + col + " is out of bounds");
+            return false;
+        }
         // Check if it is the right Player's turn
-        if (!player.equals(turn)) return false;
+        if (!player.equals(turn)) {
+            System.out.println("It is the wrong player's turn");
+            return false;
+        }
         // Check if the specified grid cell is occupied
-        if (grid[row][col] != null) return false;
+        if (grid[row][col] != null) {
+            System.out.println("The button has already been clicked by " + grid[row][col]);
+            return false;
+        }
 
         // Occupy the grid cell with player
         grid[row][col] = player;
@@ -75,6 +84,7 @@ public class TicTacToeGame implements Serializable {
 
         // Print state of game board
         Log.i(TAG, "Board State: \n" + this);
+        System.out.println(this);
 
         return true;
     }
@@ -84,7 +94,7 @@ public class TicTacToeGame implements Serializable {
      * Checks if a player has won.
      * @return A WinnerReport containing details about the win, or null if no Player has won.
      */
-    public WinnerReport getWinner() {
+    public WinnerReport getWinnerReport() {
 
         // Check rows
         for (int i = 0; i < grid.length; i++)

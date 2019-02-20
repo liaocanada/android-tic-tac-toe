@@ -9,9 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-// TODO 1. Survive Rotation
-// TODO 2. Write more test cases
-
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName() + " @" + System.identityHashCode(this);
@@ -87,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             // Mark the button with the player's symbol
             buttonGrid[row][col].setText(player.getSymbolAsString());
 
-            WinnerReport winnerReport = game.getWinner();
+            WinnerReport winnerReport = game.getWinnerReport();
 
             // There's a winner!
             if (winnerReport != null) {
