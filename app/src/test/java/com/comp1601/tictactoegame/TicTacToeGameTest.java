@@ -61,8 +61,8 @@ public class TicTacToeGameTest {
         Assert.assertEquals(player1, game.getWinnerReport().getWinner());
 
         game.handleWin(game.getWinnerReport());
-        Assert.assertEquals(1, player1.getScore());
-        Assert.assertEquals(0, player2.getScore());
+        Assert.assertEquals(1, game.getXScore());
+        Assert.assertEquals(0, game.getOScore());
     }
 
     @Test
@@ -100,8 +100,8 @@ public class TicTacToeGameTest {
         Assert.assertEquals(expected, actual);
 
         game.handleDraw();
-        Assert.assertEquals(1, player1.getScore());
-        Assert.assertEquals(1, player2.getScore());
+        Assert.assertEquals(1, game.getXScore());
+        Assert.assertEquals(1, game.getOScore());
 
         expected = " | | \n | | \n | | \n";
         actual = game.toString();

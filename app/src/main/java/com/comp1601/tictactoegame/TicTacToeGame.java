@@ -18,6 +18,9 @@ public class TicTacToeGame implements Serializable {
     private Player computer;
     private Player turn;
 
+    private int xScore;
+    private int oScore;
+
 
     /**
      * Initializes a Tic Tac Toe game with two default Players
@@ -124,7 +127,9 @@ public class TicTacToeGame implements Serializable {
     public void handleWin(WinnerReport winnerReport) {
 
         // Add 1 to score
-        winnerReport.getWinner().incrementScore();
+        if (winnerReport.getWinner().getSymbol() == 'X') {
+            xScore++;
+        } else oScore++;
 
         // Swap symbols
         swapSymbols();
@@ -147,8 +152,8 @@ public class TicTacToeGame implements Serializable {
 
     public void handleDraw() {
         // Add 1 to both scores
-        player.incrementScore();
-        computer.incrementScore();
+        xScore++;
+        oScore++;
 
         // Swap player and computer symbols
         swapSymbols();
@@ -180,19 +185,18 @@ public class TicTacToeGame implements Serializable {
         return turn;
     }
 
-    public int getPlayerScore() {
-        return player.getScore();
-    }
-
-    public int getComputerScore() {
-        return computer.getScore();
-    }
-
     public String getGridSymbol(int row, int col) {
         if (grid[row][col] == null) return "";
         return grid[row][col].getSymbolAsString();
     }
 
+    public int getXScore() {
+        return xScore;
+    }
+
+    public int getOScore() {
+        return oScore;
+    }
 
     @Override
     public String toString() {

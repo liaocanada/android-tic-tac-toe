@@ -28,7 +28,7 @@ public class Player implements Serializable {
     /**
      * The number of times this player has won
      */
-    private int score = 0;
+//    private int score = 0;
 
 
     /**
@@ -66,14 +66,14 @@ public class Player implements Serializable {
         return this.id;
     }
 
-    public int getScore() {
-        return this.score;
-    }
+//    public int getScore() {
+//        return this.score;
+//    }
 
     /* Setters */
-    public void incrementScore() {
-        score++;
-    }
+//    public void incrementScore() {
+//        score++;
+//    }
 
 
     @Override

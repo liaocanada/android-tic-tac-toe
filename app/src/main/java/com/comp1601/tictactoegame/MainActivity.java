@@ -247,8 +247,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void renderScores() {
-        int score1 = game.getPlayerScore();
-        int score2 = game.getComputerScore();
+        int score1 = game.getXScore();
+        int score2 = game.getOScore();
         player1Score.setText(getString(R.string.player1_score_label, score1));
         player2Score.setText(getString(R.string.player2_score_label, score2));
     }
